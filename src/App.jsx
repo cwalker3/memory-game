@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import StartScreen from './components/StartScreen';
+import Game from './components/Game'
 
 function App() {
   const [selected, setSelected] = useState([]);
@@ -25,7 +26,9 @@ function App() {
   }
 
   const content = started ? (
-    <></>
+    <Game
+      selected={selected}
+    />
   ) : (
     <>
       <StartScreen 
@@ -37,7 +40,9 @@ function App() {
   )
 
   return (
-    content
+    <>
+      content
+    </>
   )
 }
 
