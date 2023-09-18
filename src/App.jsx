@@ -27,7 +27,7 @@ function App() {
 
   const content = started ? (
     <Game
-      selected={selected}
+      selectedGens={selected}
     />
   ) : (
     <>
@@ -41,7 +41,7 @@ function App() {
 
   return (
     <>
-      content
+      {content}
     </>
   )
 }
