@@ -1,3 +1,5 @@
+import { capitalize } from './utils';
+
 const baseURL = 'https://pokeapi.co/api/v2/';
 const genIds = {
   //these don't include forms, megas, variants etc.
@@ -24,13 +26,11 @@ export function getIds(gens) {
   return ids;
 }
 
-export function getPokemonData(id) {
-  return fetch(baseURL + 'pokemon/' + id)
-    .then((response) => response.json())
-    .then((data) => {
-      return {
-        name: data.name,
-        sprite: data.sprites.front_default,
-      };
-    });
+export async function getPokemon(id) {
+  const response = await fetch(baseURL + 'pokemon/' + id);
+  const data = await response.json();
+  return {
+    name: capitalize(data.name),
+    sprite: data.sprites.front_default,
+  };
 }
