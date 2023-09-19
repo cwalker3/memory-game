@@ -16,13 +16,11 @@ function App() {
 
   function handleChange(e) {
     const value = parseInt(e.target.name);
-    let selectedCopy = [...selected];
     if (selected.includes(value)) {
-      selectedCopy = selectedCopy.filter(gen => gen != value)
+      setSelected([...selected].filter(gen => gen != value))
     } else {
-      selectedCopy.push(value);
+      setSelected([...selected, value])
     }
-    setSelected(selectedCopy)
   }
 
   const content = started ? (
