@@ -1,6 +1,6 @@
 function HpBar({health}) {
   return (
-    <div className="HpBar">{health}</div>
+    <div className="HpBar">HP: {health}</div>
   )
 }
 

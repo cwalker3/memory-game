@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getIds, getPokemon } from '../utils/poke-api'
-import { sample } from '../utils/utils'
+import { sample } from '../utils/utils';
 
 function Game({selectedGens, takeDamage, addPoint}) {
   const [loaded, setloaded] = useState(false);
@@ -74,29 +74,20 @@ function Game({selectedGens, takeDamage, addPoint}) {
     setPokemon(nextPokemon);
     setNextId(randomId());
   }
-
-  if (loaded) {
-      return (
-        <div className='game'>
-          <div className="pokemon">
-            <img src={pokemon.sprite} alt={pokemon.name} />
-            <p className="name">{pokemon.name}</p>
-          </div>
-          <div className="buttons">
-            <button onClick={handleClick}>Seen</button>
-            <button onClick={handleClick}>New</button>
-          </div>
-        </div>
-    )
-  } else {
-    return (
-      <div className="loading">Loading</div>
-    )
-  }
-
+  let src = loaded ? pokemon.sprite : '/pokeball.png';
   
-
-
+  return (
+    <div className='game'>
+      <div className="pokemon">
+        <img src={src} alt={pokemon.name} />
+        <p className="name">{pokemon.name}</p>
+      </div>
+      <div className="buttons">
+        <button onClick={handleClick}>Seen</button>
+        <button onClick={handleClick}>New</button>
+      </div>
+    </div>
+  )
 }
 
 export default Game;

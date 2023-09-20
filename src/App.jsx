@@ -2,18 +2,21 @@ import { useState, useEffect } from 'react'
 import StartScreen from './components/StartScreen';
 import Game from './components/Game'
 import HpBar from './components/HpBar'
+import Score from './components/Score'
 
 function App() {
   const [selected, setSelected] = useState([]);
   const [started, setStarted] = useState(false);
   const [health, setHealth] = useState(3);
   const [score, setScore] = useState(0);
-  const [high, setHigh] = useState(0);
+  const [high, setHigh] = useState(localStorage.getItem('high'));
   const [message, setMessage] = useState('');
   
   function startGame() {
    setStarted(true);
    setMessage('');
+   setScore(0);
+   setHealth(3);
   }
 
   function endGame() {
@@ -37,11 +40,18 @@ function App() {
   function addPoint() {
     const newScore = score + 1
     setScore(newScore);
-    newScore > high ? setHigh(newScore) : undefined;
+    newScore > high ? updateHigh(newScore) : undefined;
   }
 
+  function updateHigh(newScore) {
+    localStorage.setItem('high', newScore);
+    setHigh(newScore);
+  }
+
+  let content;
+
   if (started) {
-    return (
+    content = 
       <>
         <HpBar health={health} />
         <Game selectedGens={selected} 
@@ -49,10 +59,8 @@ function App() {
               addPoint={addPoint}
       />
     </>
-    )
-    
   } else {
-    return (
+    content = 
       <>
         <p className="message">{message}</p>
         <StartScreen startGame={startGame} 
@@ -60,8 +68,15 @@ function App() {
                      checked={selected}
         />
       </>
-    )
   }
+
+  return (
+    <>
+      <Score score={score} high={high}/>
+      {content}
+    </>
+
+  )
 }
 
 export default App;
