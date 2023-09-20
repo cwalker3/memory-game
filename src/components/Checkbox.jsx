@@ -1,6 +1,6 @@
 function Checkbox({value, checked, onChange}) {
   return (
-      <div>
+      <div className='checkboxContainer'>
         <label htmlFor={value}>{value}</label>
         <input 
           type="checkbox" 

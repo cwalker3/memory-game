@@ -2,8 +2,7 @@ import { useState} from 'react';
 import Checkbox from './Checkbox'
 
 const gens = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-const rules = 'When the game starts, a Pokémon from your checked region(s) will be shown. If it is your first time seeing this Pokémon, click the "new" button. If you have already seen it, click the "seen" button. A new Pokémon will then be shown. If you click the incorrect button, you will lose 1 HP. The game ends when you lose 3 HP.'
-
+const rules = 'You will be shown a Pokemon from your selected generation(s). Click "New" if you have not seen this pokemon this round, and "Seen" otherwise.'
 function StartScreen({startGame, onChange, checked}) {
   const genSelections = gens.map(gen =>
     <Checkbox 
@@ -26,9 +25,13 @@ function StartScreen({startGame, onChange, checked}) {
       <div className="rules">
         {rules}
       </div>
-      <div className="genSelect">
-        {genSelections}
+      <div className="generations">
+        <h2>Generations</h2>
+        <div className="genSelect">
+          {genSelections}
+        </div>
       </div>
+      
       <div className="startButtonContainer" >
         <button onClick={handleClick}>Start Game</button>
       </div>

@@ -72,6 +72,7 @@ function App() {
 
   return (
     <>
+      <h1>Pokemon Memory Game</h1>
       <Score score={score} high={high}/>
       {content}
     </>
