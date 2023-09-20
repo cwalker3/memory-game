@@ -3,14 +3,13 @@ import { getIds, getPokemon } from '../utils/poke-api'
 import { sample } from '../utils/utils'
 
 function Game({selectedGens}) {
+  const [loaded, setloaded] = useState(false);
   const [pokemonIds, setPokemonIds] = useState(getIds(selectedGens));
   const [seenIds, setSeenIds] = useState([]);
   const [id, setId] = useState(randomId());
   const [nextId, setNextId] = useState(randomId());
   const [pokemon, setPokemon] = useState({});
   const [nextPokemon, setNextPokemon] = useState({});
-  console.log(pokemonIds, 'new');
-  console.log(seenIds, 'seen')
   
   function randomId() {
     //90% chance for a new Pokemon
@@ -26,7 +25,10 @@ function Game({selectedGens}) {
   useEffect(() => {
     async function fetchData() {
       const data = await getPokemon(id);
+      //preload image
+      new Image().src = data.sprite
       setPokemon(data);
+      setloaded(true);
     }
     fetchData();
   }, [])
@@ -46,7 +48,6 @@ function Game({selectedGens}) {
   function handleClick(e) {
     const choice = e.target.textContent;
     const correct = _isCorrect(choice)
-    console.log(correct)
     if (!_isSeen()) {
       setSeenIds([...seenIds, id])
       setPokemonIds([...pokemonIds].filter(pokemonId => pokemonId !== id))
@@ -61,9 +62,9 @@ function Game({selectedGens}) {
 
   function _isCorrect(choice) {
     if (choice === 'Seen') {
-      return (seenIds.includes(id) ? true : false)
+      return (_isSeen)
     } else {
-      return (seenIds.includes(id) ? false : true)
+      return (!_isSeen)
     }
   }
 
@@ -73,18 +74,26 @@ function Game({selectedGens}) {
     setNextId(randomId());
   }
 
-  return (
-    <div className='game'>
-      <div className="pokemon">
-        <img src={pokemon.sprite} alt={pokemon.name} />
-        <p className="name">{pokemon.name}</p>
-      </div>
-      <div className="buttons">
-        <button onClick={handleClick}>Seen</button>
-        <button onClick={handleClick}>New</button>
-      </div>
-    </div>
-  )
+  if (loaded) {
+      return (
+        <div className='game'>
+          <div className="pokemon">
+            <img src={pokemon.sprite} alt={pokemon.name} />
+            <p className="name">{pokemon.name}</p>
+          </div>
+          <div className="buttons">
+            <button onClick={handleClick}>Seen</button>
+            <button onClick={handleClick}>New</button>
+          </div>
+        </div>
+    )
+  } else {
+    return (
+      <div className="loading">Loading</div>
+    )
+  }
+
+  
 
 
 }

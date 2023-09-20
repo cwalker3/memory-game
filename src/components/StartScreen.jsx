@@ -14,6 +14,13 @@ function StartScreen({startGame, onChange, checked}) {
     />
   )
 
+  function handleClick(e) {
+    if (checked.length === 0) {
+      return;
+    }
+    startGame();
+  }
+
   return (
     <div className="startScreen">
       <div className="rules">
@@ -22,8 +29,8 @@ function StartScreen({startGame, onChange, checked}) {
       <div className="genSelect">
         {genSelections}
       </div>
-      <div className="startButtonContainer" onClick={startGame}>
-        <button>Start Game</button>
+      <div className="startButtonContainer" >
+        <button onClick={handleClick}>Start Game</button>
       </div>
     </div>
   )
