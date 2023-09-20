@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getIds, getPokemon } from '../utils/poke-api'
 import { sample } from '../utils/utils'
 
-function Game({selectedGens}) {
+function Game({selectedGens, takeDamage, addPoint}) {
   const [loaded, setloaded] = useState(false);
   const [pokemonIds, setPokemonIds] = useState(getIds(selectedGens));
   const [seenIds, setSeenIds] = useState([]);
@@ -48,6 +48,7 @@ function Game({selectedGens}) {
   function handleClick(e) {
     const choice = e.target.textContent;
     const correct = _isCorrect(choice)
+    correct ? addPoint() : takeDamage();
     if (!_isSeen()) {
       setSeenIds([...seenIds, id])
       setPokemonIds([...pokemonIds].filter(pokemonId => pokemonId !== id))
@@ -62,9 +63,9 @@ function Game({selectedGens}) {
 
   function _isCorrect(choice) {
     if (choice === 'Seen') {
-      return (_isSeen)
+      return (_isSeen())
     } else {
-      return (!_isSeen)
+      return (!_isSeen())
     }
   }
 
