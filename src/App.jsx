@@ -11,6 +11,11 @@ function App() {
   const [score, setScore] = useState(0);
   const [high, setHigh] = useState(localStorage.getItem('high'));
   const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    //preload pokeball image on mount
+    new Image().src = '/pokeball.png'
+  }, [])
   
   function startGame() {
    setStarted(true);
