@@ -3,13 +3,13 @@ import Checkbox from './Checkbox'
 
 const gens = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 const rules = 'You will be shown a Pokemon from your selected generation(s). Click "New" if you have not seen this pokemon this round, and "Seen" otherwise.'
-function StartScreen({startGame, onChange, checked}) {
+function StartScreen({startGame, updateSelected, checked}) {
   const genSelections = gens.map(gen =>
     <Checkbox 
       key={gen} 
       value={gen} 
       checked={checked.includes(gen)}
-      onChange={onChange} 
+      onChange={handleChange} 
     />
   )
 
@@ -19,6 +19,25 @@ function StartScreen({startGame, onChange, checked}) {
     }
     startGame();
   }
+
+
+  function handleChange(e) {
+    const value = parseInt(e.target.name);
+    if (checked.includes(value)) {
+      updateSelected([...checked].filter(gen => gen != value))
+    } else {
+      updateSelected([...checked, value])
+    }
+  }
+
+  function toggleAll() {
+    if (checked.length == 9) {
+      updateSelected([])
+    } else {
+      updateSelected([1,2,3,4,5,6,7,8,9])
+    }
+  }
+
 
   return (
     <div className="startScreen">
@@ -32,8 +51,11 @@ function StartScreen({startGame, onChange, checked}) {
         </div>
       </div>
       
-      <div className="startButtonContainer" >
-        <button onClick={handleClick}>Start Game</button>
+      <div className="buttonsContainer" >
+        <button onClick={toggleAll}>
+          {checked.length == 9 ? 'UnSelect All' : 'Select All'}
+        </button>
+        <button className='start' onClick={handleClick}>Start Game</button>
       </div>
     </div>
   )

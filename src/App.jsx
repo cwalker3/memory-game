@@ -29,13 +29,8 @@ function App() {
     setMessage('Game Over')
   }
 
-  function handleChange(e) {
-    const value = parseInt(e.target.name);
-    if (selected.includes(value)) {
-      setSelected([...selected].filter(gen => gen != value))
-    } else {
-      setSelected([...selected, value])
-    }
+  function updateSelected(newSelected) {
+    setSelected(newSelected)
   }
 
   function takeDamage() {
@@ -68,8 +63,8 @@ function App() {
     content = 
       <>
         <p className="message">{message}</p>
-        <StartScreen startGame={startGame} 
-                     onChange={handleChange}
+        <StartScreen startGame={startGame}
+                     updateSelected={updateSelected}
                      checked={selected}
         />
       </>
